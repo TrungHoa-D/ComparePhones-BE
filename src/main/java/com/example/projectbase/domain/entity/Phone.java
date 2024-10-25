@@ -48,42 +48,63 @@ public class Phone {
     private String color;
 
     //Link to table Screen
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "phoneScreen")
-    @JsonIgnore
-    private Set<Screen> screens = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "screen_id", foreignKey = @ForeignKey(name = "FK_PHONE_SCREEN"))
+    private Screen screen;
 
     //Link to table Camera
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "phoneCamera")
-    @JsonIgnore
-    private Set<Camera> cameras = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "camera_id", foreignKey = @ForeignKey(name = "FK_PHONE_CAMERA"))
+    private Camera camera;
 
     //Link to table Processor
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "phonePro")
-    @JsonIgnore
-    private Set<Processor> processors = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "processor_id", foreignKey = @ForeignKey(name = "FK_PHONE_PROCESSOR"))
+    private Processor processor;
 
     //Link to table Connection
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "phoneConnection")
-    @JsonIgnore
-    private Set<Connection> connections = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "connection_id", foreignKey = @ForeignKey(name = "FK_PHONE_CONNECTION"))
+    private Connection connection;
 
     //Link to table Storage
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "phoneStorage")
-    @JsonIgnore
-    private Set<Storage> storages = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "storage_id", foreignKey = @ForeignKey(name = "FK_PHONE_STORAGE"))
+    private Storage storage;
 
     //Link to table Battery
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "phoneBattery")
-    @JsonIgnore
-    private Set<Battery> batteries = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "battery_id", foreignKey = @ForeignKey(name = "FK_PHONE_BATTERY"))
+    private Battery battery;
 
     //Link to table Design
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "phoneDesign")
-    @JsonIgnore
-    private Set<Design> designs = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "design_id", foreignKey = @ForeignKey(name = "FK_PHONE_DESIGN"))
+    private Design design;
 
     //Link to table Other
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "phoneOther")
-    @JsonIgnore
-    private Set<OtherInfor> otherInfors = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "otherInfor_id", foreignKey = @ForeignKey(name = "FK_PHONE_OTHERINFOR"))
+    private OtherInfor otherInfor;
+
+    @Override
+    public String toString() {
+        return "Phone{" +
+                "name='" + name + '\'' +
+                ", brand='" + brand + '\'' +
+                ", releaseDate='" + releaseDate + '\'' +
+                ", cost='" + cost + '\'' +
+                ", img='" + img + '\'' +
+                ", color='" + color + '\'' +
+                ", screen=" + screen +
+                ", camera=" + camera +
+                ", processor=" + processor +
+                ", connection=" + connection +
+                ", storage=" + storage +
+                ", battery=" + battery +
+                ", design=" + design +
+                ", otherInfor=" + otherInfor +
+                '}';
+    }
+
 }

@@ -6,6 +6,7 @@ import com.example.projectbase.domain.entity.Role;
 import com.example.projectbase.domain.entity.User;
 import com.example.projectbase.repository.RoleRepository;
 import com.example.projectbase.repository.UserRepository;
+import com.example.projectbase.service.DataCrawlingService;
 import com.example.projectbase.service.impl.DataCrawlingServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,9 +45,6 @@ public class ProjectBaseApplication {
     log.info("   Url swagger-ui      : http://localhost:" + port + "/swagger-ui.html");
     log.info("-------------------------START SUCCESS " + appName
         + " Application------------------------------");
-
-    DataCrawlingServiceImpl dataCrawlingService = new DataCrawlingServiceImpl(new RestTemplate());
-    log.info(dataCrawlingService.fetchDataFromApi());
   }
 
   @Bean

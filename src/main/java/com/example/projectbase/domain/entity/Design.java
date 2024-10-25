@@ -1,10 +1,13 @@
 package com.example.projectbase.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,7 +15,7 @@ import javax.persistence.*;
 @Setter
 @Builder
 @Entity
-@Table(name = "screens")
+@Table(name = "designs")
 public class Design {
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -33,7 +36,7 @@ public class Design {
     private String material;
 
     //Link to table Phone
-    @ManyToOne
-    @JoinColumn(name = "phone_id", foreignKey = @ForeignKey(name = "FK_DESIGN_PHONE"))
-    private Phone phoneDesign;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "design")
+    @JsonIgnore
+    private Set<Phone> phones = new HashSet<>();
 }
