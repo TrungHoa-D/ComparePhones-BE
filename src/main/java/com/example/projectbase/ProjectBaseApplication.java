@@ -6,6 +6,7 @@ import com.example.projectbase.domain.entity.Role;
 import com.example.projectbase.domain.entity.User;
 import com.example.projectbase.repository.RoleRepository;
 import com.example.projectbase.repository.UserRepository;
+import com.example.projectbase.service.impl.DataCrawlingServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -15,6 +16,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.client.RestTemplate;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -27,6 +29,7 @@ public class ProjectBaseApplication {
   private final RoleRepository roleRepository;
 
   private final PasswordEncoder passwordEncoder;
+
 
   public static void main(String[] args) {
     Environment env = SpringApplication.run(ProjectBaseApplication.class, args).getEnvironment();
@@ -41,6 +44,9 @@ public class ProjectBaseApplication {
     log.info("   Url swagger-ui      : http://localhost:" + port + "/swagger-ui.html");
     log.info("-------------------------START SUCCESS " + appName
         + " Application------------------------------");
+
+    DataCrawlingServiceImpl dataCrawlingService = new DataCrawlingServiceImpl(new RestTemplate());
+    log.info(dataCrawlingService.fetchDataFromApi());
   }
 
   @Bean
