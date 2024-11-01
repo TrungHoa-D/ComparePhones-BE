@@ -79,7 +79,15 @@ public class DataCrawlingServiceImpl implements DataCrawlingService {
         phone.setName(product.getGeneral().getName());
         phone.setBrand(product.getGeneral().getManufacturer());
         phone.setReleaseDate(product.getGeneral().getAttributes().getMobile_ra_mat());
-        phone.setCost(String.valueOf(product.getFilterable().getPrice()));
+        if(product.getFilterable().getPrices() != null) {
+            phone.setCost(String.valueOf(product.getFilterable().getPrices().getRoot().getValue()));
+        }
+        else if(product.getFilterable().getPrice()!= 0) {
+            phone.setCost(String.valueOf((int)product.getFilterable().getPrice()));
+        }
+        else {
+            phone.setCost("Not price yet");
+        }
         phone.setImg(product.getGeneral().getAttributes().getAds_base_image());
         phone.setColor(product.getGeneral().getAttributes().getIphone_chat_lieu());
 

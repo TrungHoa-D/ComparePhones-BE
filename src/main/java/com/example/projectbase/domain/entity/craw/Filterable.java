@@ -18,6 +18,7 @@ public class Filterable {
     private ArrayList<Filter> filter;
     private boolean is_parent;
     private double price;
+    private Prices prices;
     private double special_price;
     private String promotion_information;
     private String thumbnail;
