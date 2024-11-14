@@ -2,9 +2,6 @@ package com.example.projectbase.service.impl;
 
 import com.example.projectbase.constant.CommonConstant;
 import com.example.projectbase.constant.ErrorMessage;
-import com.example.projectbase.domain.dto.pagination.PaginationFullRequestDto;
-import com.example.projectbase.domain.dto.pagination.PaginationResponseDto;
-import com.example.projectbase.domain.dto.pagination.PagingMeta;
 import com.example.projectbase.domain.dto.request.PhoneCreateDto;
 import com.example.projectbase.domain.dto.request.PhoneUpdateDto;
 import com.example.projectbase.domain.dto.response.CommonResponseDto;
@@ -14,14 +11,10 @@ import com.example.projectbase.domain.mapper.PhoneMapper;
 import com.example.projectbase.exception.NotFoundException;
 import com.example.projectbase.repository.*;
 import com.example.projectbase.service.PhoneService;
-import com.example.projectbase.util.PaginationUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -117,51 +110,18 @@ public class PhoneServiceImpl implements PhoneService {
     }
 
     @Override
-    public PaginationResponseDto<PhoneResponseDto> getAllPhones(PaginationFullRequestDto paginationRequestDto) {
-        Pageable pageable = PaginationUtil.buildPageable(paginationRequestDto);
-        Page<Phone> phonesPage = phoneRepository.findAll(pageable);
-        PagingMeta pagingMeta = new PagingMeta(
-                phonesPage.getTotalElements(),
-                phonesPage.getTotalPages(),
-                phonesPage.getNumber(),
-                phonesPage.getSize(),
-                paginationRequestDto.getSortBy(),
-                paginationRequestDto.getIsAscending().toString()
-        );
-        List<PhoneResponseDto> phonesResponseDtoList= phonesPage.stream().map(phoneMapper::toPhoneResponseDto).collect(Collectors.toList());
-        return new PaginationResponseDto<>(pagingMeta, phonesResponseDtoList);
+    public List<PhoneResponseDto> getAllPhones() {
+        return phoneRepository.findAllPhonesResponse();
     }
 
     @Override
-    public PaginationResponseDto<PhoneResponseDto> getPhonesByBrand(String brand, PaginationFullRequestDto request) {
-        Pageable pageable = PaginationUtil.buildPageable(request);
-        Page<Phone> phonesPage = phoneRepository.findAllByBrandIgnoreCase(brand,pageable);
-        PagingMeta pagingMeta = new PagingMeta(
-                phonesPage.getTotalElements(),
-                phonesPage.getTotalPages(),
-                phonesPage.getNumber(),
-                phonesPage.getSize(),
-                request.getSortBy(),
-                request.getIsAscending().toString()
-        );
-        List<PhoneResponseDto> phonesResponseDtoList= phonesPage.stream().map(phoneMapper::toPhoneResponseDto).collect(Collectors.toList());
-        return new PaginationResponseDto<>(pagingMeta, phonesResponseDtoList);
+    public List<Phone> getPhonesByBrand(String brand) {
+        return phoneRepository.findAllByBrandIgnoreCase(brand);
     }
 
     @Override
-    public PaginationResponseDto<PhoneResponseDto> getPhonesByName(String name, PaginationFullRequestDto request) {
-        Pageable pageable = PaginationUtil.buildPageable(request);
-        Page<Phone> phonesPage = phoneRepository.findAllByNameContainingIgnoreCase(name, pageable);
-        PagingMeta pagingMeta = new PagingMeta(
-                phonesPage.getTotalElements(),
-                phonesPage.getTotalPages(),
-                phonesPage.getNumber(),
-                phonesPage.getSize(),
-                request.getSortBy(),
-                request.getIsAscending().toString()
-        );
-        List<PhoneResponseDto> phonesResponseDtoList= phonesPage.stream().map(phoneMapper::toPhoneResponseDto).collect(Collectors.toList());
-        return new PaginationResponseDto<>(pagingMeta, phonesResponseDtoList);
+    public List<Phone> getPhonesByName(String name) {
+        return phoneRepository.findAllByNameContainingIgnoreCase(name);
     }
 
     @Override

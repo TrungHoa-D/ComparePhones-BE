@@ -1,9 +1,11 @@
 package com.example.projectbase.domain.dto.response;
 
-import com.example.projectbase.domain.entity.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+@AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
@@ -15,12 +17,4 @@ public class PhoneResponseDto {
     private String cost;
     private String img;
     private String color;
-    private Screen screen;
-    private Camera camera;
-    private Processor processor;
-    private Connection connection;
-    private Storage storage;
-    private Battery battery;
-    private Design design;
-    private OtherInfor otherInfor;
 }
