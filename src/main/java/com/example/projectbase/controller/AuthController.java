@@ -23,13 +23,13 @@ public class AuthController {
 
   private final AuthService authService;
 
-  @Operation(summary = "API Login")
+  @Operation(summary = "API Login", hidden = true)
   @PostMapping(UrlConstant.Auth.LOGIN)
   public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDto request) {
     return VsResponseUtil.success(authService.login(request));
   }
 
-  @Operation(summary = "API test")
+  @Operation(summary = "API test", hidden = true)
   @PostMapping("auth/test")
   public String login(@ValidFileImage MultipartFile multipartFile) {
     return multipartFile.getContentType();

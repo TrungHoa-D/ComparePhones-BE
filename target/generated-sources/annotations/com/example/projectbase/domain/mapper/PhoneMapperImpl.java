@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-11-10T22:56:36+0700",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.12 (Ubuntu)"
+    date = "2024-11-16T15:28:08+0700",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.9 (Oracle Corporation)"
 )
 @Component
 public class PhoneMapperImpl implements PhoneMapper {
@@ -28,14 +28,6 @@ public class PhoneMapperImpl implements PhoneMapper {
         phoneResponseDto.setCost( phone.getCost() );
         phoneResponseDto.setImg( phone.getImg() );
         phoneResponseDto.setColor( phone.getColor() );
-        phoneResponseDto.setScreen( phone.getScreen() );
-        phoneResponseDto.setCamera( phone.getCamera() );
-        phoneResponseDto.setProcessor( phone.getProcessor() );
-        phoneResponseDto.setConnection( phone.getConnection() );
-        phoneResponseDto.setStorage( phone.getStorage() );
-        phoneResponseDto.setBattery( phone.getBattery() );
-        phoneResponseDto.setDesign( phone.getDesign() );
-        phoneResponseDto.setOtherInfor( phone.getOtherInfor() );
 
         return phoneResponseDto;
     }
