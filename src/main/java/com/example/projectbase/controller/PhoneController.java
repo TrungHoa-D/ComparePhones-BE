@@ -33,6 +33,20 @@ public class PhoneController {
     }
 
     @Tags({@Tag(name = "phone-controller-admin"), @Tag(name = "phone-controller")})
+    @Operation(summary = "API get phone by id")
+    @GetMapping(UrlConstant.Phone.GET_PHONE_BY_ID)
+    public ResponseEntity<?> getPhoneByID(@RequestParam String id) {
+        return VsResponseUtil.success(phoneService.getPhoneById(id));
+    }
+
+    @Tags({@Tag(name = "phone-controller-admin"), @Tag(name = "phone-controller")})
+    @Operation(summary = "API get phone by price range")
+    @GetMapping(UrlConstant.Phone.GET_PHONE_BY_PRICE_RANGE)
+    public ResponseEntity<?> getPhoneByPriceRange(@RequestParam String lowestPrice, @RequestParam String highestPrice) {
+        return VsResponseUtil.success(phoneService.getPhoneByPriceRange(lowestPrice, highestPrice));
+    }
+
+    @Tags({@Tag(name = "phone-controller-admin"), @Tag(name = "phone-controller")})
     @Operation(summary = "API get phones by brand")
     @GetMapping(UrlConstant.Phone.GET_PHONE_BY_BRAND)
     public ResponseEntity<?> getPhonesByBrand(@RequestParam String brand) {

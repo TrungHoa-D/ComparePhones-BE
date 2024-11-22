@@ -33,13 +33,7 @@ public class PhoneServiceImpl implements PhoneService {
 
     @Override
     public PhoneResponseDto createPhone(PhoneCreateDto phoneCreateDto) {
-        Screen screen = new Screen();
-        screen.setResolution(phoneCreateDto.getScreenRequestDto().getResolution());
-        screen.setSize(phoneCreateDto.getScreenRequestDto().getSize());
-        screen.setScreen(phoneCreateDto.getScreenRequestDto().getScreen());
-        screen.setFeatures(phoneCreateDto.getScreenRequestDto().getFeatures());
-        screen.setScanFrequency(phoneCreateDto.getScreenRequestDto().getScanFrequency());
-        screen.setType(phoneCreateDto.getScreenRequestDto().getType());
+        Screen screen = getScreen(phoneCreateDto);
         screenRepository.save(screen);
 
         Camera camera = new Camera();
@@ -53,14 +47,7 @@ public class PhoneServiceImpl implements PhoneService {
         processor.setGpu(phoneCreateDto.getProcessorRequestDto().getGpu());
         processorRepository.save(processor);
 
-        Connection connection = new Connection();
-        connection.setMobile_nfc(phoneCreateDto.getConnectionRequestDto().getMobile_nfc());
-        connection.setSim(phoneCreateDto.getConnectionRequestDto().getSim());
-        connection.setOs(phoneCreateDto.getConnectionRequestDto().getOs());
-        connection.setNetwork(phoneCreateDto.getConnectionRequestDto().getNetwork());
-        connection.setWlan(phoneCreateDto.getConnectionRequestDto().getWlan());
-        connection.setBluetooth(phoneCreateDto.getConnectionRequestDto().getBluetooth());
-        connection.setGps(phoneCreateDto.getConnectionRequestDto().getGps());
+        Connection connection = getConnection(phoneCreateDto);
         connectionRepository.save(connection);
 
         Storage storage = new Storage();
@@ -81,13 +68,7 @@ public class PhoneServiceImpl implements PhoneService {
         design.setMaterial(phoneCreateDto.getDesignRequestDto().getMaterial());
         designRepository.save(design);
 
-        OtherInfor otherInfor = new OtherInfor();
-        otherInfor.setCooler(phoneCreateDto.getOtherInforRequestDto().getCooler());
-        otherInfor.setResistanceIndex(phoneCreateDto.getOtherInforRequestDto().getResistanceIndex());
-        otherInfor.setTech(phoneCreateDto.getOtherInforRequestDto().getTech());
-        otherInfor.setSoundTech(phoneCreateDto.getOtherInforRequestDto().getSoundTech());
-        otherInfor.setUtilities(phoneCreateDto.getOtherInforRequestDto().getUtilities());
-        otherInfor.setSensor(phoneCreateDto.getOtherInforRequestDto().getSensor());
+        OtherInfor otherInfor = getOtherInfor(phoneCreateDto);
         otherInforRepository.save(otherInfor);
 
         Phone phone = Phone.builder()
@@ -109,19 +90,63 @@ public class PhoneServiceImpl implements PhoneService {
         return phoneMapper.toPhoneResponseDto(phoneRepository.save(phone));
     }
 
+    private static OtherInfor getOtherInfor(PhoneCreateDto phoneCreateDto) {
+        OtherInfor otherInfor = new OtherInfor();
+        otherInfor.setCooler(phoneCreateDto.getOtherInforRequestDto().getCooler());
+        otherInfor.setResistanceIndex(phoneCreateDto.getOtherInforRequestDto().getResistanceIndex());
+        otherInfor.setTech(phoneCreateDto.getOtherInforRequestDto().getTech());
+        otherInfor.setSoundTech(phoneCreateDto.getOtherInforRequestDto().getSoundTech());
+        otherInfor.setUtilities(phoneCreateDto.getOtherInforRequestDto().getUtilities());
+        otherInfor.setSensor(phoneCreateDto.getOtherInforRequestDto().getSensor());
+        return otherInfor;
+    }
+
+    private static Screen getScreen(PhoneCreateDto phoneCreateDto) {
+        Screen screen = new Screen();
+        screen.setResolution(phoneCreateDto.getScreenRequestDto().getResolution());
+        screen.setSize(phoneCreateDto.getScreenRequestDto().getSize());
+        screen.setScreen(phoneCreateDto.getScreenRequestDto().getScreen());
+        screen.setFeatures(phoneCreateDto.getScreenRequestDto().getFeatures());
+        screen.setScanFrequency(phoneCreateDto.getScreenRequestDto().getScanFrequency());
+        screen.setType(phoneCreateDto.getScreenRequestDto().getType());
+        return screen;
+    }
+
+    private static Connection getConnection(PhoneCreateDto phoneCreateDto) {
+        Connection connection = new Connection();
+        connection.setMobile_nfc(phoneCreateDto.getConnectionRequestDto().getMobile_nfc());
+        connection.setSim(phoneCreateDto.getConnectionRequestDto().getSim());
+        connection.setOs(phoneCreateDto.getConnectionRequestDto().getOs());
+        connection.setNetwork(phoneCreateDto.getConnectionRequestDto().getNetwork());
+        connection.setWlan(phoneCreateDto.getConnectionRequestDto().getWlan());
+        connection.setBluetooth(phoneCreateDto.getConnectionRequestDto().getBluetooth());
+        connection.setGps(phoneCreateDto.getConnectionRequestDto().getGps());
+        return connection;
+    }
+
     @Override
     public List<PhoneResponseDto> getAllPhones() {
         return phoneRepository.findAllPhonesResponse();
     }
 
     @Override
-    public List<Phone> getPhonesByBrand(String brand) {
+    public List<PhoneResponseDto> getPhonesByBrand(String brand) {
         return phoneRepository.findAllByBrandIgnoreCase(brand);
     }
 
     @Override
-    public List<Phone> getPhonesByName(String name) {
+    public List<PhoneResponseDto> getPhonesByName(String name) {
         return phoneRepository.findAllByNameContainingIgnoreCase(name);
+    }
+
+    @Override
+    public List<PhoneResponseDto> getPhoneByPriceRange(String from, String to) {
+        return phoneRepository.findPhonesWithinPriceRange(from,to);
+    }
+
+    @Override
+    public Phone getPhoneById(String id) {
+        return phoneRepository.findById(id).orElseThrow(() -> new NotFoundException(ErrorMessage.Phone.ERR_NOT_FOUND_ID));
     }
 
     @Override

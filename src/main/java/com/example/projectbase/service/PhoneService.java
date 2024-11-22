@@ -11,8 +11,10 @@ import java.util.List;
 public interface PhoneService {
     PhoneResponseDto createPhone(PhoneCreateDto phoneCreateDto);
     List<PhoneResponseDto> getAllPhones();
-    List<Phone> getPhonesByBrand(String brand);
-    List<Phone> getPhonesByName(String name);
+    List<PhoneResponseDto> getPhonesByBrand(String brand);
+    List<PhoneResponseDto> getPhonesByName(String name);
+    List<PhoneResponseDto> getPhoneByPriceRange(String from, String to);
+    Phone getPhoneById(String id);
     PhoneResponseDto updatePhone(PhoneUpdateDto phoneUpdateDto);
     CommonResponseDto deletePhone(String phoneId);
 
