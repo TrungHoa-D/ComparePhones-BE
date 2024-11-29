@@ -12,9 +12,16 @@ import com.example.projectbase.exception.NotFoundException;
 import com.example.projectbase.repository.*;
 import com.example.projectbase.service.PhoneService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -128,6 +135,57 @@ public class PhoneServiceImpl implements PhoneService {
     public List<PhoneResponseDto> getAllPhones() {
         return phoneRepository.findAllPhonesResponse();
     }
+
+    @Override
+    public List<PhoneResponseDto> getFilteredPhones(Map<String, Object> filters) {
+        Specification<Phone> spec = buildSpecification(filters);
+        List<Phone> phones = phoneRepository.findAll(spec);
+        return phoneMapper.toPhoneResponseDtoList(phones);
+    }
+
+    public Specification<Phone> buildSpecification(Map<String, Object> filters) {
+        return (Root<Phone> root, CriteriaQuery<?> query, CriteriaBuilder cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            for (Map.Entry<String, Object> entry : filters.entrySet()) {
+                String field = entry.getKey();
+                Object value = entry.getValue();
+
+                if (field != null && value != null) {
+                    try {
+                        // Xử lý String: tìm kiếm với like, không phân biệt chữ hoa chữ thường
+                        if (value instanceof String) {
+                            predicates.add(cb.like(cb.lower(root.get(field)), "%" + ((String) value).toLowerCase() + "%"));
+                        }
+                        // Xử lý Integer, Long, Double, Float, Boolean: so sánh trực tiếp
+                        else if (value instanceof Integer) {
+                            predicates.add(cb.equal(root.get(field), value));
+                        } else if (value instanceof Long) {
+                            predicates.add(cb.equal(root.get(field), value));
+                        } else if (value instanceof Double) {
+                            predicates.add(cb.greaterThanOrEqualTo(root.get(field).as(Double.class), (Double) value));
+                        } else if (value instanceof Float) {
+                            predicates.add(cb.greaterThanOrEqualTo(root.get(field).as(Float.class), (Float) value));
+                        } else if (value instanceof Boolean) {
+                            predicates.add(cb.equal(root.get(field), value));
+                        }
+                        // Xử lý Object: có thể là các trường hợp khác, ví dụ như List, Map hoặc các kiểu dữ liệu phức tạp
+                        else {
+                            // Đây có thể là các kiểu dữ liệu phức tạp khác
+                            // Ví dụ: xử lý Object tùy chỉnh hoặc các giá trị khác
+                            System.err.println("Chưa xử lý kiểu Object cho field: " + field);
+                        }
+                    } catch (IllegalArgumentException e) {
+                        System.err.println("Field không tồn tại hoặc không tương thích: " + field);
+                    }
+                }
+            }
+
+            return predicates.isEmpty() ? cb.conjunction() : cb.and(predicates.toArray(new Predicate[0]));
+        };
+    }
+
+
 
     @Override
     public List<PhoneResponseDto> getPhonesByBrand(String brand) {

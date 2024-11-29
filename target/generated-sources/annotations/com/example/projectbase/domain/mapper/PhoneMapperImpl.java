@@ -2,13 +2,15 @@ package com.example.projectbase.domain.mapper;
 
 import com.example.projectbase.domain.dto.response.PhoneResponseDto;
 import com.example.projectbase.domain.entity.Phone;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-11-16T15:28:08+0700",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.9 (Oracle Corporation)"
+    date = "2024-11-29T11:38:01+0700",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.13 (Ubuntu)"
 )
 @Component
 public class PhoneMapperImpl implements PhoneMapper {
@@ -30,5 +32,19 @@ public class PhoneMapperImpl implements PhoneMapper {
         phoneResponseDto.setColor( phone.getColor() );
 
         return phoneResponseDto;
+    }
+
+    @Override
+    public List<PhoneResponseDto> toPhoneResponseDtoList(List<Phone> phones) {
+        if ( phones == null ) {
+            return null;
+        }
+
+        List<PhoneResponseDto> list = new ArrayList<PhoneResponseDto>( phones.size() );
+        for ( Phone phone : phones ) {
+            list.add( toPhoneResponseDto( phone ) );
+        }
+
+        return list;
     }
 }

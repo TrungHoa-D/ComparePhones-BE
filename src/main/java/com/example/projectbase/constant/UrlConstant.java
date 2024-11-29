@@ -6,8 +6,6 @@ public class UrlConstant {
     private static final String PRE_FIX = "/auth";
 
     public static final String LOGIN = PRE_FIX + "/login";
-    public static final String LOGOUT = PRE_FIX + "/logout";
-
     private Auth() {
     }
   }
@@ -27,6 +25,7 @@ public class UrlConstant {
     private static final String PRE_FIX = "/phone";
     public static final String CREATE_PHONE = PRE_FIX;
     public static final String GET_ALL_PHONE = PRE_FIX;
+    public static final String GET_FILTERED_PHONE = PRE_FIX + "/filtered";
     public static final String GET_PHONE_BY_BRAND = PRE_FIX+ "/brand";
     public static final String GET_PHONE_BY_NAME = PRE_FIX+ "/name";
     public static final String GET_PHONE_BY_ID = PRE_FIX+ "/id";

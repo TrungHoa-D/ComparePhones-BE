@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RequiredArgsConstructor
 @RestApiV1
 public class PhoneController {
@@ -30,6 +32,13 @@ public class PhoneController {
     @GetMapping(UrlConstant.Phone.GET_ALL_PHONE)
     public ResponseEntity<?> getAllPhone() {
         return VsResponseUtil.success(phoneService.getAllPhones());
+    }
+
+    @Tags({@Tag(name = "phone-controller-admin"), @Tag(name = "phone-controller")})
+    @Operation(summary = "API get filtered phones")
+    @PostMapping(UrlConstant.Phone.GET_FILTERED_PHONE)
+    public ResponseEntity<?> getFilteredPhone(@RequestBody Map<String, Object> filters) {
+        return VsResponseUtil.success(phoneService.getFilteredPhones(filters));
     }
 
     @Tags({@Tag(name = "phone-controller-admin"), @Tag(name = "phone-controller")})

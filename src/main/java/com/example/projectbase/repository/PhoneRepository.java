@@ -4,6 +4,7 @@ import com.example.projectbase.domain.dto.response.PhoneResponseDto;
 import com.example.projectbase.domain.entity.Phone;
 import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +12,7 @@ import java.util.List;
 
 
 @Repository
-public interface PhoneRepository extends JpaRepository<Phone, String> {
+public interface PhoneRepository extends JpaRepository<Phone, String>, JpaSpecificationExecutor<Phone> {
 
     @Query("SELECT new com.example.projectbase.domain.dto.response.PhoneResponseDto( " +
             "p.id, p.name, p.brand, p.releaseDate, p.cost, p.img, p.color) " +
@@ -31,4 +32,5 @@ public interface PhoneRepository extends JpaRepository<Phone, String> {
             "FROM Phone p WHERE p.cost >= :minCost AND p.cost <= :maxCost ORDER BY p.cost ASC")
     List<PhoneResponseDto> findPhonesWithinPriceRange(@Param("minCost") String minCost,
                                                       @Param("maxCost") String maxCost);
+
 }
