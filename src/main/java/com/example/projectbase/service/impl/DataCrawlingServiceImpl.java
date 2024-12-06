@@ -13,6 +13,8 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import static java.lang.Long.*;
+
 @Service
 @RequiredArgsConstructor
 public class DataCrawlingServiceImpl implements DataCrawlingService {
@@ -80,13 +82,13 @@ public class DataCrawlingServiceImpl implements DataCrawlingService {
         phone.setBrand(product.getGeneral().getManufacturer());
         phone.setReleaseDate(product.getGeneral().getAttributes().getMobile_ra_mat());
         if(product.getFilterable().getPrices() != null) {
-            phone.setCost(String.valueOf(product.getFilterable().getPrices().getRoot().getValue()));
+            phone.setCost(product.getFilterable().getPrices().getRoot().getValue());
         }
         else if(product.getFilterable().getPrice()!= 0) {
-            phone.setCost(String.valueOf((int)product.getFilterable().getPrice()));
+            phone.setCost((int)product.getFilterable().getPrice());
         }
         else {
-            phone.setCost("Not price yet");
+            phone.setCost(-1);
         }
         phone.setImg(product.getGeneral().getAttributes().getAds_base_image());
         phone.setColor(product.getGeneral().getAttributes().getIphone_chat_lieu());

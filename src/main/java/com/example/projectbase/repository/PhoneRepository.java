@@ -16,7 +16,7 @@ public interface PhoneRepository extends JpaRepository<Phone, String>, JpaSpecif
 
     @Query("SELECT new com.example.projectbase.domain.dto.response.PhoneResponseDto( " +
             "p.id, p.name, p.brand, p.releaseDate, p.cost, p.img, p.color) " +
-            "FROM Phone p ORDER BY p.cost ASC")
+            "FROM Phone p ORDER BY p.cost DESC")
     List<PhoneResponseDto> findAllPhonesResponse();
     @Query("SELECT new com.example.projectbase.domain.dto.response.PhoneResponseDto( " +
             "p.id, p.name, p.brand, p.releaseDate, p.cost, p.img, p.color) " +
@@ -30,8 +30,8 @@ public interface PhoneRepository extends JpaRepository<Phone, String>, JpaSpecif
     @Query("SELECT new com.example.projectbase.domain.dto.response.PhoneResponseDto( " +
             "p.id, p.name, p.brand, p.releaseDate, p.cost, p.img, p.color) " +
             "FROM Phone p WHERE p.cost >= :minCost AND p.cost <= :maxCost ORDER BY p.cost ASC")
-    List<PhoneResponseDto> findPhonesWithinPriceRange(@Param("minCost") String minCost,
-                                                      @Param("maxCost") String maxCost);
+    List<PhoneResponseDto> findPhonesWithinPriceRange(@Param("minCost") int minCost,
+                                                      @Param("maxCost") int maxCost);
 
     @Query("SELECT new com.example.projectbase.domain.dto.response.PhoneResponseDto( " +
             "p.id, p.name, p.brand, p.releaseDate, p.cost, p.img, p.color) " +

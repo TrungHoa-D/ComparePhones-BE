@@ -198,7 +198,7 @@ public class PhoneServiceImpl implements PhoneService {
     }
 
     @Override
-    public List<PhoneResponseDto> getPhoneByPriceRange(String from, String to) {
+    public List<PhoneResponseDto> getPhoneByPriceRange(int from, int to) {
         return phoneRepository.findPhonesWithinPriceRange(from,to);
     }
 

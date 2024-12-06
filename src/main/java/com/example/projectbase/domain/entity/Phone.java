@@ -37,7 +37,7 @@ public class Phone {
 
     @Nationalized
     @Column(nullable = false)
-    private String cost;
+    private int cost;
 
     @Nationalized
     @Column

@@ -13,7 +13,7 @@ public class PhoneCreateDto {
     private String name;
     private String brand;
     private String releaseDate;
-    private String cost;
+    private int cost;
     private String img;
     private String color;
     private ScreenRequestDto screenRequestDto;

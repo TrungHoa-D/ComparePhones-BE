@@ -14,7 +14,7 @@ public class PhoneResponseDto {
     private String name;
     private String brand;
     private String releaseDate;
-    private String cost;
+    private int cost;
     private String img;
     private String color;
 }

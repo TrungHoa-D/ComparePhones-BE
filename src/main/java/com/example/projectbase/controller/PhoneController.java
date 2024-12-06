@@ -51,7 +51,7 @@ public class PhoneController {
     @Tags({@Tag(name = "phone-controller-admin"), @Tag(name = "phone-controller")})
     @Operation(summary = "API get phone by price range")
     @GetMapping(UrlConstant.Phone.GET_PHONE_BY_PRICE_RANGE)
-    public ResponseEntity<?> getPhoneByPriceRange(@RequestParam String lowestPrice, @RequestParam String highestPrice) {
+    public ResponseEntity<?> getPhoneByPriceRange(@RequestParam int lowestPrice, @RequestParam int highestPrice) {
         return VsResponseUtil.success(phoneService.getPhoneByPriceRange(lowestPrice, highestPrice));
     }
 

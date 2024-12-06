@@ -15,7 +15,7 @@ public interface PhoneService {
     List<PhoneResponseDto> getFilteredPhones(Map<String, Object> filters);
     List<PhoneResponseDto> getPhonesByBrand(String brand);
     List<PhoneResponseDto> getPhonesByName(String name);
-    List<PhoneResponseDto> getPhoneByPriceRange(String from, String to);
+    List<PhoneResponseDto> getPhoneByPriceRange(int from, int to);
     List<PhoneResponseDto> getPhoneByRAM(String ram);
     List<PhoneResponseDto> getPhoneByROM(String rom);
     List<PhoneResponseDto> getPhoneByScreen(String screen);
