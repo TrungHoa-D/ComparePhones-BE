@@ -203,6 +203,21 @@ public class PhoneServiceImpl implements PhoneService {
     }
 
     @Override
+    public List<PhoneResponseDto> getPhoneByRAM(String ram) {
+        return phoneRepository.findPhonesByRamContainingIgnoreCase(ram);
+    }
+
+    @Override
+    public List<PhoneResponseDto> getPhoneByROM(String rom) {
+        return phoneRepository.findPhonesByInternalMemoryContainingIgnoreCase(rom);
+    }
+
+    @Override
+    public List<PhoneResponseDto> getPhoneByScreen(String screen) {
+        return phoneRepository.findPhonesByScreenContainingIgnoreCase(screen);
+    }
+
+    @Override
     public Phone getPhoneById(String id) {
         return phoneRepository.findById(id).orElseThrow(() -> new NotFoundException(ErrorMessage.Phone.ERR_NOT_FOUND_ID));
     }

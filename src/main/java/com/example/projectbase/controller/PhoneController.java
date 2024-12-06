@@ -69,6 +69,27 @@ public class PhoneController {
         return VsResponseUtil.success(phoneService.getPhonesByName(name));
     }
 
+    @Tags({@Tag(name = "phone-controller-admin"), @Tag(name = "phone-controller")})
+    @Operation(summary = "API get phones by ram")
+    @GetMapping(UrlConstant.Phone.GET_PHONE_BY_RAM)
+    public ResponseEntity<?> getPhonesByRam(@RequestParam String ram) {
+        return VsResponseUtil.success(phoneService.getPhoneByRAM(ram));
+    }
+
+    @Tags({@Tag(name = "phone-controller-admin"), @Tag(name = "phone-controller")})
+    @Operation(summary = "API get phones by rom")
+    @GetMapping(UrlConstant.Phone.GET_PHONE_BY_ROM)
+    public ResponseEntity<?> getPhonesByRom(@RequestParam String rom) {
+        return VsResponseUtil.success(phoneService.getPhoneByROM(rom));
+    }
+
+    @Tags({@Tag(name = "phone-controller-admin"), @Tag(name = "phone-controller")})
+    @Operation(summary = "API get phones by screen")
+    @GetMapping(UrlConstant.Phone.GET_PHONE_BY_SCREEN)
+    public ResponseEntity<?> getPhonesByScreen(@RequestParam String screen) {
+        return VsResponseUtil.success(phoneService.getPhoneByScreen(screen));
+    }
+
     @Tag(name = "phone-controller-admin")
     @Operation(summary = "API update phone")
     @PutMapping(UrlConstant.Phone.UPDATE_PHONE)

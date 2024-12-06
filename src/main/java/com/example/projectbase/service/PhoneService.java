@@ -16,6 +16,9 @@ public interface PhoneService {
     List<PhoneResponseDto> getPhonesByBrand(String brand);
     List<PhoneResponseDto> getPhonesByName(String name);
     List<PhoneResponseDto> getPhoneByPriceRange(String from, String to);
+    List<PhoneResponseDto> getPhoneByRAM(String ram);
+    List<PhoneResponseDto> getPhoneByROM(String rom);
+    List<PhoneResponseDto> getPhoneByScreen(String screen);
     Phone getPhoneById(String id);
     PhoneResponseDto updatePhone(PhoneUpdateDto phoneUpdateDto);
     CommonResponseDto deletePhone(String phoneId);

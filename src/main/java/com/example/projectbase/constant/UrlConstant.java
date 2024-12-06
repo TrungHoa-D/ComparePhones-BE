@@ -28,6 +28,9 @@ public class UrlConstant {
     public static final String GET_FILTERED_PHONE = PRE_FIX + "/filtered";
     public static final String GET_PHONE_BY_BRAND = PRE_FIX+ "/brand";
     public static final String GET_PHONE_BY_NAME = PRE_FIX+ "/name";
+    public static final String GET_PHONE_BY_RAM = PRE_FIX+ "/ram";
+    public static final String GET_PHONE_BY_ROM = PRE_FIX+ "/rom";
+    public static final String GET_PHONE_BY_SCREEN = PRE_FIX+ "/screen";
     public static final String GET_PHONE_BY_ID = PRE_FIX+ "/id";
     public static final String GET_PHONE_BY_PRICE_RANGE = PRE_FIX+ "/priceRange";
     public static final String UPDATE_PHONE = PRE_FIX;

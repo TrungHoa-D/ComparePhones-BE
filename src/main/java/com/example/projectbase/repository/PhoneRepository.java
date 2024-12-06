@@ -33,4 +33,18 @@ public interface PhoneRepository extends JpaRepository<Phone, String>, JpaSpecif
     List<PhoneResponseDto> findPhonesWithinPriceRange(@Param("minCost") String minCost,
                                                       @Param("maxCost") String maxCost);
 
+    @Query("SELECT new com.example.projectbase.domain.dto.response.PhoneResponseDto( " +
+            "p.id, p.name, p.brand, p.releaseDate, p.cost, p.img, p.color) " +
+            "FROM Phone p JOIN p.storage s WHERE LOWER(s.ram) LIKE LOWER(CONCAT('%', :ram, '%'))")
+    List<PhoneResponseDto> findPhonesByRamContainingIgnoreCase(@Param("ram") String ram);
+
+    @Query("SELECT new com.example.projectbase.domain.dto.response.PhoneResponseDto( " +
+            "p.id, p.name, p.brand, p.releaseDate, p.cost, p.img, p.color) " +
+            "FROM Phone p JOIN p.storage s WHERE LOWER(s.internalMemory) LIKE LOWER(CONCAT('%', :internalMemory, '%'))")
+    List<PhoneResponseDto> findPhonesByInternalMemoryContainingIgnoreCase(@Param("internalMemory") String internalMemory);
+
+    @Query("SELECT new com.example.projectbase.domain.dto.response.PhoneResponseDto( " +
+            "p.id, p.name, p.brand, p.releaseDate, p.cost, p.img, p.color) " +
+            "FROM Phone p JOIN p.screen sc WHERE LOWER(sc.screen) LIKE LOWER(CONCAT('%', :screen, '%'))")
+    List<PhoneResponseDto> findPhonesByScreenContainingIgnoreCase(@Param("screen") String screen);
 }
